@@ -1,0 +1,127 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/ico" href="{{ url_for('static', filename='images/icon.png') }}" />
+    <link rel=stylesheet href="{{ url_for('static', filename='js/codemirror-5.25.2/doc/docs.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='js/codemirror-5.25.2/lib/codemirror.css') }}">
+    <style type="text/css">
+      .CodeMirror
+      {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+      }
+    </style>
+
+    <script src="{{ url_for('static', filename='js/codemirror-5.25.2/lib/codemirror.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/codemirror-5.25.2/addon/selection/active-line.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/codemirror-5.25.2/addon/mode/loadmode.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/codemirror-5.25.2/mode/meta.js') }}"></script>
+    <script>
+      LANGUAGES = {
+        "C": ["c"],
+        "C++": ["cpp", "cc"],
+        "C#": ["cs"],
+        "CSS": ["css"],
+        "Erlang": ["erl", "hrl"],
+        "Go": ["go"],
+        "HTML": ["html"],
+        "Java": ["java"],
+        "Javascript": ["js", "es6"],
+        "Markdown": ["md"],
+        "Objective-C": ["m"],
+        "PHP": ["php"],
+        "Perl": ["pl", "pm"],
+        "Python": ["py"],
+        "Ruby": ["rb"],
+        "Rust": ["rs"],
+        "Scala": ["scala"],
+        "Shell": ["sh"],
+        "SQL": ["sql"],
+        "Swift": ["swift"],
+        "Text": ["txt"]
+      };
+
+      window.onload = function () {
+        CodeMirror.modeURL = "static/js/codemirror-5.25.2/mode/%N/%N.js";
+        var editor = CodeMirror.fromTextArea(
+          document.getElementById("code"), {
+            styleActiveLine: true,
+            lineNumbers: true,
+            lineWrapping: true
+          }
+        );
+
+        function highlight(languageName) {
+          var printName = (languageName == "Text") ? "None" : languageName;
+          document.getElementById("language-name").textContent = printName;
+
+          var extension = LANGUAGES[languageName][0];
+          var info = CodeMirror.findModeByExtension(extension);
+          var mode = info.mode;
+          var spec = info.mime;
+          console.log(mode, spec);
+          editor.setOption("mode", spec);
+          CodeMirror.autoLoadMode(editor, mode);
+        }
+
+        var pending;
+        editor.on("change", function() {
+          console.log("pending")
+          clearTimeout(pending);
+          pending = setTimeout(update, 400);
+        });
+
+        function update() {
+          var sourceCode = editor.getValue()
+          if (sourceCode.trim().length == 0) {
+            highlight("Text");
+            return;
+          }
+
+          var request = new XMLHttpRequest();
+          request.open("POST", "language-name", true);
+          request.setRequestHeader(
+              "Content-type", "application/x-www-form-urlencoded")
+  	      request.onreadystatechange = function () {
+            if (request.readyState != 4 || request.status != 200)
+              return;
+
+            highlight(request.responseText);
+          };
+
+          var postVars = 'code=' + encodeURIComponent(sourceCode)
+          request.send(postVars);
+        }
+      }
+    </script>
+    <title>Chameledit</title>
+  </head>
+  <body>
+    <nav id="nav">
+      <a href="https://www.github.com/yoeo/chameledit">
+        <h1>Chameledit</h1>
+        <img id="logo" src="{{ url_for('static', filename='images/icon.png') }}" />
+      </a>
+      <ul>
+        <li><a href="https://www.github.com/yoeo/chameledit">Chameledit on Github</a></li>
+        <li><a href="https://www.github.com/yoeo/guesslang">Powered by Guesslang</a></li>
+        <li><a href="https://guesslang.readthedocs.io/en/latest/">Guesslang documentation</a></li>
+      </ul>
+    </nav>
+    <article>
+      <h1>
+        Highlight your code
+      </h1>
+      <p>
+        <strong>Chameledit</strong>
+        a simple web editor that magically highlights your code.
+      </p>
+      <p>
+        Highlight: <strong id="language-name">None</strong>
+      </p>
+      <textarea id="code" name="code"></textarea>
+    </article>
+  </body>
+</html>
