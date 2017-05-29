@@ -19,7 +19,7 @@ Chameledit is powered by
 You can install Chameledit using the following command:
 
 ```bash
-pip install .
+pip3 install .
 ```
 
 ## Usage
