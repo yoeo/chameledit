@@ -10,9 +10,7 @@ Chameledit is powered by
 
 #### Preview
 
-<a href="http://guesslang.readthedocs.io/en/latest/_static/videos/chameledit.webm">
-  <img src="data/chameledit.png"  alt="Pasta chameledit_" />
-</a>
+![](data/chameledit.gif)
 
 ## Installation
 
@@ -21,7 +19,7 @@ Chameledit is powered by
 You can install Chameledit using the following command:
 
 ```bash
-python3 setup.py install
+pip install .
 ```
 
 ## Usage
