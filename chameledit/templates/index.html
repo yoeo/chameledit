@@ -20,27 +20,36 @@
     <script src="{{ url_for('static', filename='js/codemirror-5.25.2/mode/meta.js') }}"></script>
     <script>
       LANGUAGES = {
+        "Batchfile": ["bat", "cmd", "btm"],
         "C": ["c"],
-        "C++": ["cpp", "cc"],
         "C#": ["cs"],
+        "C++": ["cpp", "cc"],
+        "CoffeeScript": ["coffee", "litcoffee"],
         "CSS": ["css"],
         "Erlang": ["erl", "hrl"],
         "Go": ["go"],
+        "Haskell": ["hs", "lhs"],
         "HTML": ["html"],
         "Java": ["java"],
-        "Javascript": ["js", "es6"],
+        "JavaScript": ["js", "es6"],
+        "Jupyter Notebook": ["ipynb"],
+        "Lua": ["lua"],
         "Markdown": ["md"],
-        "Objective-C": ["m"],
-        "PHP": ["php"],
+        "Matlab": ["matlab"],
+        "Objective-C": ["mm"],
         "Perl": ["pl", "pm"],
+        "PHP": ["php"],
+        "PowerShell": ["ps1"],
         "Python": ["py"],
+        "R": ["r", "rdata", "rds", "rda"],
         "Ruby": ["rb"],
         "Rust": ["rs"],
         "Scala": ["scala"],
         "Shell": ["sh"],
         "SQL": ["sql"],
         "Swift": ["swift"],
-        "Text": ["txt"]
+        "TeX": ["tex"],
+        "TypeScript": ["ts", "tsx"]
       };
 
       window.onload = function () {

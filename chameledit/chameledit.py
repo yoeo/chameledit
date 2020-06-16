@@ -17,8 +17,7 @@ def index():
 @app.route('/language-name', methods=['POST'])
 def language():
     source_code = request.form['code']
-    print(source_code)
-    return guess.language_name(source_code)
+    return guess.language_name(source_code) or 'Text'
 
 
 def main():

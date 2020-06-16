@@ -14,7 +14,7 @@ Chameledit is powered by
 
 ## Installation
 
-* Python 3.5+ is required
+* Python 3.6+ is required
 
 You can install Chameledit using the following command:
 
@@ -41,4 +41,4 @@ Then go to `http://localhost:8000/`
 * Chameledit icon created with
   [AndroidAssetStudio](https://github.com/romannurik/AndroidAssetStudio)
 
-* Chameledit — Copyright (c) 2017 Y. SOMDA, [MIT License](LICENSE)
+* Chameledit — Copyright (c) 2020 Y. SOMDA, [MIT License](LICENSE)
